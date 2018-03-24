@@ -1,0 +1,38 @@
+"""
+Problem:  For a M x N array, get an output which is a flat list containing values from the array read in a circular clockwise form
+from the outside in.
+
+For example: Array = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15],[16,17,18,19,20]]
+Output: [1, 2, 3, 4, 5, 10, 15, 20, 19, 18, 17, 16, 11, 6, 7, 8, 9, 14, 13, 12]
+voila
+"""
+
+def circlearray(a):
+  newlist = []
+  nrow = len(a)
+  if nrow == 0:
+    return newlist
+  ncol = len(a[0])
+  lim = round(ncol/2.)
+  while len(a) > 0:
+    newlist.extend(a.pop(0))
+    if len(a) == 0: #For one row scenarios
+      break
+    for eh in a:    #Iterate through the tail values of each row
+      newlist.append(eh.pop())
+    rowe = a.pop()
+    if len(rowe) == 0:  #For odd numbered columns, operation will stop halfway
+      break
+    newlist.extend(rowe[::-1])
+    a.reverse()
+    for eh in a:
+      newlist.append(eh.pop(0))
+    a.reverse()
+    if len(a) != 0:
+      if len(a[0]) == 0:
+        break
+      
+  return newlist
+
+a = [[1,2],[3,4],[5,6]]
+print circlearray(a)
